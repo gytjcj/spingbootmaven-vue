@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>台账查询模块(涉密)</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+<link rel="stylesheet" href="/xadmin/css/font.css">
+<link rel="stylesheet" href="/xadmin/css/xadmin.css">
+
+<link type="text/css" rel="stylesheet" href="/css/index.css">
+<script type="text/javascript" src="/js/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<link type="text/css" rel="stylesheet" href="/css/jq.css">
+
+<script src="/xadmin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/xadmin/js/xadmin.js"></script>
+<!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body>
+	<div class="x-nav">
+		<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">演示</a>
+			<a> <cite>导航元素</cite></a>
+		</span> <a class="layui-btn layui-btn-small"
+			style="line-height: 1.6em; margin-top: 3px; float: right"
+			onclick="location.reload()" title="刷新"> <i
+			class="layui-icon layui-icon-refresh" style="line-height: 30px"></i></a>
+	</div>
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-body layui-table-body layui-table-main">
+						<form class="form1" action="/deviceinfo/updatemaintainrecord" method="post">
+							<table border="1" class="tab layui-table">
+								<tr>
+									<th colspan="14">
+										<h2>故障派单</h2>
+									</th>
+								</tr>
+								<tr class="ta">
+									<td>
+										故障编号：<input id="maintainrecordid" name="maintainrecordid"
+										readonly="readonly" class="read_only" /><br /> 
+										派单到：<select name="receiver" class="select">
+											<option style="display: none"></option>
+											<option>张三</option>
+											<option>李四</option>
+											<option>王五</option>
+									</select>
+									</td>
+									<td>
+										设备资产编号：<input id="deviceassetid" class="read_only" 
+												readonly="readonly" name="deviceassetid" /><br /> 
+												<input style="display:none" id="deviceid" class="read_only" 
+												 readonly="readonly" name="deviceid" /> 
+										报修时间：<input class="read_only" id="repairasktime" 
+												readonly="readonly" name="repairasktime" />
+									</td>
+									<td>
+										报修人：<input id="repairaskpeople" class="read_only"
+												readonly="readonly" name="repairaskpeople" /><br /> 
+										报修部门：<input id="repairaskoffice" class="read_only" 
+												readonly="readonly" name="repairaskoffice" />
+									</td>
+									<td>
+										故障简要说明：<textarea id="description" class="textbox read_only" 
+												readonly="readonly" name="description"></textarea>
+									</td>
+									<td width="110px">
+										<input type="hidden" class="nowtime" name="responsetime" /> 
+										<input type="hidden" name="repairinfo" value="待修复" /> 
+										
+										<input type="reset" class="btn" value="清空" /><br /> 
+										<input type="submit" class="btn" value="派单" />
+									</td>
+								</tr>
+								<thead class="tab_thead">
+									<tr>
+										<th>故障编号</th>
+										<th>设备资产编号</th>
+										<th>设备编号</th>
+										<th>报修时间</th>
+										<th>报修处室</th>
+										<th>报修人</th>
+										<!-- <th>响应时间</th> -->
+										<th>是否修复</th>
+										<!-- <th>修复时间</th>
+											<th>故障类型</th>
+											<th>故障原因</th>
+											<th>解决方法</th>
+											<th>备件情况</th>
+											<th>服务满意度</th>
+											<th>维修人</th> -->
+										<th>故障说明</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody class="tab_tbody">
+									<tr th:each="maintainrecord : ${maintainrecordlist}"
+										class="sql_maintainrecord">
+										<td th:text="${maintainrecord.maintainrecordid}"></td>
+										<td th:text="${maintainrecord.deviceassetid}"></td>
+										<td th:text="${maintainrecord.deviceid}"></td>
+										<td th:text="${maintainrecord.repairasktime}"></td>
+										<td th:text="${maintainrecord.repairaskoffice}"></td>
+										<td th:text="${maintainrecord.repairaskpeople}"></td>
+										<!-- <td th:text="${maintainrecord.responsetime}"></td> -->
+										<td th:text="${maintainrecord.repairinfo}"></td>
+										<!-- <td th:text="${maintainrecord.repairfinishtime}"></td>
+											<td th:text="${maintainrecord.faulttype}"></td>
+											<td th:text="${maintainrecord.failurecause}"></td>
+											<td th:text="${maintainrecord.resolvemethod}"></td>
+											<td th:text="${maintainrecord.sparepart}"></td>
+											<td th:text="${maintainrecord.satisfactioninfo}"></td>
+											<td th:text="${maintainrecord.receiver}"></td> -->
+										<td th:text="${maintainrecord.description}"></td>
+										<!-- <td th:text="${maintainrecord.remarkinfo}"></td> -->
+										<td>
+										<a href="javascript:;" id=${deviceinfo_secret.id} class="theme-login"
+										   style="text-decoration: none;"><i class="layui-icon">&#xe640;</i></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
